@@ -5,7 +5,7 @@ DESTINATION="$2"
 ORIGINAL="$3"
 
 BASE_PATH="$(dirname "${DESTINATION}")"
-EXCLUDE_FROM="${BASE_PATH}/.rsyncignore"
+EXCLUDE_FROM="${ORIGINAL}/.rsyncignore"
 
 OPTIONS="\
     --archive \
