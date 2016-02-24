@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+BACKUP="$1"
+FOLDER="$(dirname "${BACKUP}")"
+TARGET="$(basename "${FOLDER}")/$(basename "${BACKUP}")"
+LINK="$(dirname "${FOLDER}")/current"
+
+if [ -e ${LINK} ]; then
+    rm ${LINK}
+fi
+ln --symbolic ${TARGET} ${LINK}

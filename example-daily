@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+ORIGINAL="./original/"
+DESTINATION="./backup/daily"
+ROTATE=14
+
+./backup-rsync incremental ${DESTINATION} ${ORIGINAL}
+./backup-remove-old ${DESTINATION} ${ROTATE}

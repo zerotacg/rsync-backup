@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+TYPE=${1,,}
+DESTINATION="$2"
+ORIGINAL="$3"
+
+BASE_PATH="$(dirname "${DESTINATION}")"
+EXCLUDE_FROM="${BASE_PATH}/.rsyncignore"
+
+OPTIONS="\
+    --archive \
+    --partial \
+    --progress \
+    --one-file-system \
+    --delete \
+    --delete-excluded \
+    --exclude-from=${EXCLUDE_FROM} \
+"
+
+case "${TYPE}" in
+    "incremental")
+        echo "backup: incremental"
+        LINK="$(dirname "${DESTINATION}")/current"
+        SNAPSHOT=$(readlink -f "${LINK}")
+        OPTIONS="${OPTIONS} --link-dest=${SNAPSHOT}"
+        ;;
+    "full" | *)
+        echo "backup: full"
+        ;;
+esac
+
+SUFFIX=$(date "+%Y-%m-%dT%H:%M:%S-%a")
+BACKUP="${DESTINATION}/${SUFFIX}"
+
+mkdir --parents ${BACKUP}
+rsync ${OPTIONS} ${ORIGINAL} ${BACKUP}
+./backup-update-link ${BACKUP}

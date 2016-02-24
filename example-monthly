@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+ORIGINAL="./original/"
+DESTINATION="./backup/monthly"
+ROTATE=60
+
+./backup-rsync full ${DESTINATION} ${ORIGINAL}
+./backup-remove-old ${DESTINATION} ${ROTATE}

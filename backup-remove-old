@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+DESTINATION="$1"
+DAYS="$2"
+
+find ${DESTINATION} -maxdepth 1 -mtime +$DAYS -type d -exec rm -r {} \;
